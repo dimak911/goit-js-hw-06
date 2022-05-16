@@ -9,17 +9,28 @@ const createBtnRef = document.querySelector('[data-create]');
 const destroyBtnRef = document.querySelector('[data-destroy]');
 const boxesContainerRef = document.querySelector('#boxes');
 
-let amountValue = 0;
-createBtnRef.addEventListener('click', getAmount);
+createBtnRef.addEventListener('click', addBoxes);
+destroyBtnRef.addEventListener('click', removeBoxes);
 
-function getAmount() {
-  amountValue = Number(inputValueRef.value);
+function addBoxes() {
+  createBoxes(inputValueRef.value);
 }
 
-console.log(amountValue);
+function createBoxes(amount) {
+  const boxesEl = [];
+  let divSize = 30;
+  for (let index = 0; index < amount; index++) {
+    const newBoxEl = document.createElement('div');
+    newBoxEl.style.width = `${divSize}px`;
+    newBoxEl.style.height = `${divSize}px`;
+    newBoxEl.style.backgroundColor = getRandomHexColor();
+    boxesEl.push(newBoxEl);
+    divSize += 10;
+  }
+  boxesContainerRef.append(...boxesEl);
+}
 
-// const elements = [];
-
-// for (let index = 0; index < Number(inputValueRef.value); index++) {
-//   const element = array[index];
-// }
+function removeBoxes() {
+  boxesContainerRef.innerHTML = '';
+  // inputValueRef.value = ''; // Очистка инпута
+}
